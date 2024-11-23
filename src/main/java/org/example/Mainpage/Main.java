@@ -72,12 +72,12 @@ public class Main {
                 System.out.print("\n -------");
                 System.out.println("\n| 退出中 |");
                 System.out.println(" -------\n");
-                System.out.println("感谢使用博客系统，再见！");
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
+                System.out.println("感谢使用博客系统，再见！");
                 return;
             }
             else {

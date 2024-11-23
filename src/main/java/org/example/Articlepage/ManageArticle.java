@@ -64,78 +64,75 @@ public class ManageArticle {
                     System.out.println("4. 输入 0 返回文章管理界面");
                     System.out.println("\n请选择：");
                     String choices = scanner.nextLine().trim();
-                    if (choices.equals("0")) {
-                        break;
-                    }
-                    else{
-                        int i = 0;
-                        int j = 0;
-                        if(choices.startsWith("del")){
-                            String[] parts = choices.split(" ");
-                            if(parts.length == 2){
-                                int id = Integer.parseInt(parts[1]);
-                                for(Article article : articles) {
+                    try {
+                        if (choices.equals("0")) {
+                            break;
+                        } else {
+                            int i = 0;
+                            int j = 0;
+                            if (choices.startsWith("del")) {
+                                String[] parts = choices.split(" ");
+                                if (parts.length == 2) {
+                                    int id = Integer.parseInt(parts[1]);
+                                    for (Article article : articles) {
+                                        if (article.getAuthor().equals(currentUser)) {
+                                            i++;
+                                            if (i == id) {
+                                                delArticle(article);
+                                                break;
+                                            }
+                                        }
+                                        j++;
+                                    }
+                                } else {
+                                    System.out.println("请输入文章序号！");
+                                    try {
+                                        Thread.sleep(2000);
+                                    } catch (InterruptedException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                }
+                            } else if (choices.startsWith("change")) {
+                                String[] parts = choices.split(" ");
+                                if (parts.length == 2) {
+                                    int id = Integer.parseInt(parts[1]);
+                                    for (Article article : articles) {
+                                        if (article.getAuthor().equals(currentUser)) {
+                                            i++;
+                                            if (i == id) {
+                                                changeArticle(article);
+                                                break;
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    System.out.println("请输入文章序号！");
+                                    try {
+                                        Thread.sleep(2000);
+                                    } catch (InterruptedException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                }
+                            } else if (Integer.parseInt(choices) > 0 && Integer.parseInt(choices) <= len) {
+                                for (Article article : articles) {
                                     if (article.getAuthor().equals(currentUser)) {
                                         i++;
-                                        if(i == id){
-                                            delArticle(article);
+                                        if (i == Integer.parseInt(choices)) {
+                                            ReadArticle.readArticle(scanner, articles.get(j), currentUser);
                                             break;
                                         }
                                     }
                                     j++;
                                 }
                             }
-                            else {
-                                System.out.println("请输入文章序号！");
-                                try {
-                                    Thread.sleep(2000);
-                                } catch (InterruptedException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            }
                         }
-                        else if(choices.startsWith("change")){
-                            String[] parts = choices.split(" ");
-                            if(parts.length == 2){
-                                int id = Integer.parseInt(parts[1]);
-                                for(Article article : articles) {
-                                    if (article.getAuthor().equals(currentUser)) {
-                                        i++;
-                                        if(i == id){
-                                            changeArticle(article);
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                            else{
-                                System.out.println("请输入文章序号！");
-                                try {
-                                    Thread.sleep(2000);
-                                } catch (InterruptedException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            }
-                        }
-                        else if (Integer.parseInt(choices)> 0 && Integer.parseInt(choices) <= len) {
-                            for(Article article : articles) {
-                                if (article.getAuthor().equals(currentUser)) {
-                                    i++;
-                                    if(i == Integer.parseInt(choices)){
-                                        ReadArticle.readArticle(scanner, articles.get(j), currentUser);
-                                        break;
-                                    }
-                                }
-                                j++;
-                            }
-                        }
-                        else {
-                            System.out.println("无效选项！");
-                            try {
-                                Thread.sleep(2000);
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
-                            }
+                    }
+                    catch (Exception e) {
+                        System.out.println("无效选项！");
+                        try {
+                            Thread.sleep(2000);
+                        } catch (InterruptedException ex) {
+                            throw new RuntimeException(e);
                         }
                     }
                 }

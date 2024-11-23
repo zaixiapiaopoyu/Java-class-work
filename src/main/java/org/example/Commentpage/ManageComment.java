@@ -9,12 +9,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ManageComment {
+    // ANSI color codes
+    public static final String RESET = "\033[0m";
+    public static final String GREEN = "\033[0;32m";
+    public static final String RED = "\033[0;31m";
+    public static final String CYAN = "\033[0;36m";
+
     private static final String BASE_FOLDER = "data/comments/";
     private static final String COMMENT_FILE_SUFFIX = "_comments.txt";
 
     // 添加评论
-    public static void addComment(int articleId, String content, Article article,String username) {
-        List<Comment> comments = loadComments(article.getTimes().TimeMilliseconds()+"_"+article.getTitle());
+    public static void addComment(int articleId, String content, Article article, String username) {
+        List<Comment> comments = loadComments(article.getTimes().TimeMilliseconds() + "_" + article.getTitle());
         int len = 0;
         for(Comment comment : comments) {
             if(comment.getId() != 0){
@@ -23,13 +29,14 @@ public class ManageComment {
         }
         int newId = len + 1;
         Times times = TimesTamp.timestamp();
-        Comment newComment = new Comment(newId,username + " : " + content,times);
-        FileHandler.appendFile(BASE_FOLDER, article.getTimes().TimeMilliseconds()+"_"+article.getTitle(), COMMENT_FILE_SUFFIX, newComment.toFileString());
+        Comment newComment = new Comment(newId, username + " : " + content, times);
+        FileHandler.appendFile(BASE_FOLDER, article.getTimes().TimeMilliseconds() + "_" + article.getTitle(), COMMENT_FILE_SUFFIX, newComment.toFileString());
+        System.out.println(GREEN + "评论添加成功！" + RESET);
     }
 
     // 添加回复评论
-    public static void addreplyComment(int articleId, int parentId, String username, String content,Article article) {
-        List<String> lines = FileHandler.readFile(BASE_FOLDER, article.getTimes().TimeMilliseconds()+"_"+article.getTitle(), COMMENT_FILE_SUFFIX);
+    public static void addreplyComment(int articleId, int parentId, String username, String content, Article article) {
+        List<String> lines = FileHandler.readFile(BASE_FOLDER, article.getTimes().TimeMilliseconds() + "_" + article.getTitle(), COMMENT_FILE_SUFFIX);
         List<String> updatedLines = new ArrayList<>();
         boolean replyAdded = false;
 
@@ -40,13 +47,13 @@ public class ManageComment {
             Linecount++;
             if(Linecount == 3){
                 Linecount = 0;
-                updatedLines.add(threeline[0]+"\n"+threeline[1]+"\n"+threeline[2]);
-                Comment comment = Comment.fromString(threeline[0]+"\n"+threeline[1]+"\n"+threeline[2]);
-                if (!replyAdded && comment.getId()  == parentId) {
+                updatedLines.add(threeline[0] + "\n" + threeline[1] + "\n" + threeline[2]);
+                Comment comment = Comment.fromString(threeline[0] + "\n" + threeline[1] + "\n" + threeline[2]);
+                if (!replyAdded && comment.getId() == parentId) {
                     int newId = 0;
                     String replyContent = username + " 回复: " + content;
                     Times times = TimesTamp.timestamp();
-                    Comment reply = new Comment(newId,  replyContent,times);
+                    Comment reply = new Comment(newId, replyContent, times);
                     updatedLines.add(reply.toFileString());
                     replyAdded = true;
                 }
@@ -54,10 +61,11 @@ public class ManageComment {
         }
 
         if (!replyAdded) {
-            System.out.println("未找到父评论，回复失败！");
+            System.out.println(RED + "未找到父评论，回复失败！" + RESET);
         }
         else {
-            FileHandler.writecommentFile(BASE_FOLDER, article.getTimes().TimeMilliseconds()+"_"+article.getTitle(), COMMENT_FILE_SUFFIX, updatedLines);
+            FileHandler.writecommentFile(BASE_FOLDER, article.getTimes().TimeMilliseconds() + "_" + article.getTitle(), COMMENT_FILE_SUFFIX, updatedLines);
+            System.out.println(GREEN + "回复评论成功！" + RESET);
         }
     }
 
@@ -72,7 +80,7 @@ public class ManageComment {
             Linecount++;
             if(Linecount == 3){
                 Linecount = 0;
-                Comment comment = Comment.fromString(threeline[0]+"\n"+threeline[1]+"\n"+threeline[2]);
+                Comment comment = Comment.fromString(threeline[0] + "\n" + threeline[1] + "\n" + threeline[2]);
                 if (comment != null) {
                     comments.add(comment);
                 }
