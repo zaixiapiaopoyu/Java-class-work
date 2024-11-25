@@ -6,7 +6,16 @@ import java.util.List;
 
 public class FileHandler {
 
-    // 读取文件内容
+    /**
+     * 读取文件内容。
+     * 如果文件不存在，会自动创建空文件。
+     *
+     * @param baseFolder 文件的基础文件夹路径
+     * @param fileName   文件名
+     * @param suffix     文件后缀
+     * @return 包含文件中每一行内容的列表
+     */
+
     public static List<String> readFile(String baseFolder, String fileName, String suffix) {
         String filePath = baseFolder + fileName + suffix;
         File file = new File(filePath);
@@ -34,7 +43,17 @@ public class FileHandler {
         return lines;
     }
 
-    // 覆盖写入文件内容
+    /**
+     * 覆盖写入文件内容。
+     * 如果文件不存在，会自动创建，并在文件名中添加时间戳以确保唯一性。
+     *
+     * @param baseFolder      文件的基础文件夹路径
+     * @param fileName        文件名
+     * @param suffix          文件后缀
+     * @param lines           要写入文件的内容
+     * @param timemilliseconds 时间戳，用于生成唯一文件名
+     */
+
     public static void writeFile(String baseFolder, String fileName, String suffix, List<String> lines,long timemilliseconds) {
         String filePath = baseFolder + timemilliseconds+ "_" + fileName + suffix;
         File file = new File(filePath);
@@ -76,6 +95,16 @@ public class FileHandler {
             }
         }
     }
+
+    /**
+     * 将评论写入文件。
+     * 如果文件不存在，则创建一个新的文件。
+     *
+     * @param baseFolder 文件的基础文件夹路径
+     * @param fileName   文件名
+     * @param suffix     文件后缀
+     * @param lines      要写入文件的评论内容
+     */
 
     public static void writecommentFile(String baseFolder, String fileName, String suffix, List<String> lines) {
         String filePath = baseFolder + fileName + suffix;
@@ -125,7 +154,16 @@ public class FileHandler {
         }
     }
 
-    // 追加内容到文件
+    /**
+     * 追加内容到文件。
+     * 如果文件不存在，会自动创建。
+     *
+     * @param baseFolder 文件的基础文件夹路径
+     * @param fileName   文件名
+     * @param suffix     文件后缀
+     * @param line       要追加的内容
+     */
+
     public static void appendFile(String baseFolder, String fileName, String suffix, String line) {
         String filePath = baseFolder + fileName + suffix;
         File file = new File(filePath);

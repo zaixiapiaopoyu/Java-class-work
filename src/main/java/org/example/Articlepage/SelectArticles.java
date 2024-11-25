@@ -6,7 +6,19 @@ import org.example.AllCanUse.load;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * SelectArticles 类用于选择并阅读文章。
+ */
+
 public class SelectArticles {
+
+    /**
+     * 选择文章并进行阅读操作。
+     *
+     * @param scanner    输入扫描器
+     * @param currentUser 当前登录的用户
+     */
+
     public static void  selectArticles(Scanner scanner, String currentUser) {
         List<Article> articles = load.loadArticles();
         if (articles.isEmpty()) {
@@ -49,7 +61,7 @@ public class SelectArticles {
                 else {
                     System.out.println("无效选项！");
                     try {
-                        Thread.sleep(1000); // 延时 3 秒
+                        Thread.sleep(1000); // 延时 1 秒
                     }
                     catch (InterruptedException e) {
                         throw new RuntimeException(e);

@@ -7,10 +7,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * WriteArticle 类用于发布新的文章。
+ */
+
 public class WriteArticle {
 
     private static final String ARTICLE_FOLDER = "data/articles/";
     private static final String FILE_SUFFIX = "_article.txt";
+
+    /**
+     * 发布文章方法，用户输入标题和内容来创建一篇新的文章。
+     *
+     * @param currentUser 当前登录用户
+     */
 
     public static void writeArticle(String currentUser ) {
         NewPage.newpage();
@@ -21,11 +31,21 @@ public class WriteArticle {
         System.out.println("请输入文章标题：");
         Scanner scanner = new Scanner(System.in);
         String title = scanner.nextLine();
+        while(title.equals("")) {
+            System.out.println("文章标题不能为空！");
+            System.out.println("请重新输入文章标题：");
+            title = scanner.nextLine();
+        }
         if (title.equals("#")) {
             return;
         }
         System.out.println("请输入文章内容：");
         String content = scanner.nextLine();
+        while(content.equals("")) {
+            System.out.println("文章内容不能为空！");
+            System.out.println("请重新输入文章内容：");
+            content = scanner.nextLine();
+        }
         if (content.equals("#")) {
             return;
         }
@@ -39,6 +59,15 @@ public class WriteArticle {
         }
     }
 
+    /**
+     * 添加新文章的方法
+     *
+     * @param title   文章标题
+     * @param content 文章内容
+     * @param author  文章作者
+     * @param times   文章发布时间
+     */
+
     private static void addArticle(String title, String content, String author,Times times) {
         // 生成新的 ID，可以通过文件夹中文件的数量来确定
         File folder = new File(ARTICLE_FOLDER);
@@ -47,6 +76,13 @@ public class WriteArticle {
         Article newArticle = new Article(newId, title, content, author, 0,times); // 使用新的 ID
         saveAuthorArticle(newArticle,times);
     }
+
+    /**
+     * 保存文章到文件的方法
+     *
+     * @param article  文章对象
+     * @param times    文章发布时间
+     */
 
     public static void saveAuthorArticle(Article article,Times times) {
         List<String> lines = new ArrayList<>();

@@ -7,10 +7,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * UserLogin 类负责处理用户登录操作。
+ * 包含用户输入用户名和密码进行登录的逻辑，并验证登录信息是否正确。
+ * 登录成功后返回用户名，否则返回 null。
+ */
+
 public class UserLogin {
 
     private static final String BASE_FOLDER = "data/users_data/";
     private static final String USER_FILE = "users.txt";
+
+    /**
+     * 提供用户登录功能。
+     * 用户输入用户名和密码进行登录，若登录成功返回用户名，失败则继续请求输入。
+     *
+     * @return 登录成功返回用户名，失败则返回 null
+     */
 
     public static String login() {
         boolean isLoggedIn = false;
@@ -39,6 +52,15 @@ public class UserLogin {
         return null;
     }
 
+    /**
+     * 验证用户名和密码是否正确。
+     * 遍历存储的所有用户信息，检查是否有匹配的用户名和密码。
+     *
+     * @param username 用户名
+     * @param password 密码
+     * @return 登录成功返回 true，失败则返回 false
+     */
+
     public static boolean login(String username, String password) {
         List<User> users = loadUsers();
         for (User user : users) {
@@ -60,6 +82,13 @@ public class UserLogin {
         }
         return false;
     }
+
+    /**
+     * 从文件中加载所有的用户数据。
+     * 文件中每个用户占三行（用户名、密码、邮箱），将其解析为 User 对象并添加到用户列表中。
+     *
+     * @return 所有用户的列表
+     */
 
     public static List<User> loadUsers() {
         List<User> users = new ArrayList<>();

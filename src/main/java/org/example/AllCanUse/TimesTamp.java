@@ -2,7 +2,18 @@ package org.example.AllCanUse;
 
 import java.util.Calendar;
 
+/**
+ * TimesTamp 类用于获取当前系统时间，并返回一个表示该时间的 Times 对象。
+ */
+
 public class TimesTamp {
+
+    /**
+     * 获取当前时间，并将其封装为一个 Times 对象。
+     *
+     * @return 包含当前时间（年、月、日、时、分、秒）的 Times 对象
+     */
+
     public static Times timestamp() {
         // 获取当前时间（包括年、月、日、时、分、秒）
         Calendar calendar = Calendar.getInstance();

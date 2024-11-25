@@ -7,11 +7,24 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * load 类用于从文件中加载用户和文章数据。
+ * 它包含加载用户信息和加载文章信息的方法。
+ */
+
 public class load {
     private static final String BASE_FOLDER = "data/users_data/";
     private static final String USER_FILE = "users.txt";
     private static final String ARTICLE_FOLDER = "data/articles/";
     private static final String FILE_SUFFIX = "_article.txt";
+
+    /**
+     * 加载用户信息。
+     * 从 BASE_FOLDER 文件夹中的 USER_FILE 文件中逐行读取用户信息，
+     * 每三个连续的行组成一个用户信息。
+     *
+     * @return 用户列表
+     */
 
     public static List<User> loadUsers() {
         List<User> users = new ArrayList<>();
@@ -33,6 +46,14 @@ public class load {
         }
         return users;
     }
+
+    /**
+     * 加载文章信息。
+     * 从 ARTICLE_FOLDER 文件夹中读取所有文件，筛选出以 FILE_SUFFIX 结尾的文章文件，
+     * 并为每篇文章分配一个唯一的 ID。
+     *
+     * @return 文章列表
+     */
 
     public static List<Article> loadArticles() {
         File folder = new File(ARTICLE_FOLDER);
@@ -58,6 +79,15 @@ public class load {
         }
         return articles;
     }
+
+    /**
+     * 加载单篇文章信息。
+     * 从文件中读取文章的具体内容，并创建 Article 对象。
+     *
+     * @param title 文章标题
+     * @param id    文章唯一 ID
+     * @return 加载的文章对象
+     */
 
     public static Article loadSingleArticle(String title, int id) {
         List<String> lines = FileHandler.readFile(ARTICLE_FOLDER, title, FILE_SUFFIX);

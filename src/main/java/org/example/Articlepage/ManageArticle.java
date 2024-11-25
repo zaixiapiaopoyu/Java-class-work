@@ -1,8 +1,6 @@
 package org.example.Articlepage;
 
 import org.example.AllCanUse.NewPage;
-import org.example.AllCanUse.Times;
-import org.example.AllCanUse.TimesTamp;
 import org.example.AllCanUse.load;
 
 import java.util.List;
@@ -12,7 +10,19 @@ import static org.example.Articlepage.ChangeArticle.changeArticle;
 import static org.example.Articlepage.DelArticle.delArticle;
 import static org.example.Articlepage.ListAuthorArticle.listauthorarticle;
 
+/**
+ * ManageArticle 类用于提供文章管理的功能，包括发布、查看、修改和删除文章。
+ */
+
 public class ManageArticle {
+
+    /**
+     * 检查用户登录状态并进入文章管理主界面。
+     *
+     * @param isLoggedIn 用户是否已登录
+     * @param scanner    输入扫描器
+     * @param currentUser 当前登录用户
+     */
 
     public static void managearticle(boolean isLoggedIn,Scanner scanner,String currentUser) {
         NewPage.newpage();
@@ -28,6 +38,13 @@ public class ManageArticle {
             manageArticles(scanner, currentUser);
         }
     }
+
+    /**
+     * 文章管理主界面。
+     *
+     * @param scanner    输入扫描器
+     * @param currentUser 当前登录用户
+     */
 
     public static void manageArticles(Scanner scanner, String currentUser) {
         while (true) {
@@ -50,7 +67,8 @@ public class ManageArticle {
                 while(true) {
                     List<Article> articles = load.loadArticles();
                     int len = listauthorarticle(currentUser);
-                    if(len < 0){
+                    if(len <= 0){
+                        System.out.println("\n|-----暂无文章！-----|\n\n\n");
                         try {
                             Thread.sleep(2000);
                         } catch (InterruptedException e) {
@@ -67,7 +85,8 @@ public class ManageArticle {
                     try {
                         if (choices.equals("0")) {
                             break;
-                        } else {
+                        }
+                        else {
                             int i = 0;
                             int j = 0;
                             if (choices.startsWith("del")) {
@@ -84,7 +103,8 @@ public class ManageArticle {
                                         }
                                         j++;
                                     }
-                                } else {
+                                }
+                                else {
                                     System.out.println("请输入文章序号！");
                                     try {
                                         Thread.sleep(2000);
@@ -92,7 +112,8 @@ public class ManageArticle {
                                         throw new RuntimeException(e);
                                     }
                                 }
-                            } else if (choices.startsWith("change")) {
+                            }
+                            else if (choices.startsWith("change")) {
                                 String[] parts = choices.split(" ");
                                 if (parts.length == 2) {
                                     int id = Integer.parseInt(parts[1]);
@@ -105,7 +126,8 @@ public class ManageArticle {
                                             }
                                         }
                                     }
-                                } else {
+                                }
+                                else {
                                     System.out.println("请输入文章序号！");
                                     try {
                                         Thread.sleep(2000);
@@ -113,7 +135,8 @@ public class ManageArticle {
                                         throw new RuntimeException(e);
                                     }
                                 }
-                            } else if (Integer.parseInt(choices) > 0 && Integer.parseInt(choices) <= len) {
+                            }
+                            else if (Integer.parseInt(choices) > 0 && Integer.parseInt(choices) <= len) {
                                 for (Article article : articles) {
                                     if (article.getAuthor().equals(currentUser)) {
                                         i++;

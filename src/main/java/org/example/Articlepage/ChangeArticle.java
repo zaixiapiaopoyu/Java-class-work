@@ -10,10 +10,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * ChangeArticle 类提供了修改文章的功能，包括修改标题、内容，并保存修改后的文章。
+ * 修改后旧文章文件和对应评论文件将被删除。
+ */
+
 public class ChangeArticle {
 
     private static final String ARTICLE_FOLDER = "data/articles/";
     private static final String FILE_SUFFIX = "_article.txt";
+
+    /**
+     * 修改文章的方法。
+     *
+     * @param article 要修改的文章对象
+     */
 
     public static void changeArticle(Article article) {
 
@@ -61,6 +72,15 @@ public class ChangeArticle {
         }
     }
 
+    /**
+     * 添加新的文章到存储系统。
+     *
+     * @param title   新文章的标题
+     * @param content 新文章的内容
+     * @param author  新文章的作者
+     * @param times   新文章的时间戳
+     */
+
     private static void addArticle(String title, String content, String author,Times times) {
         // 生成新的 ID，可以通过文件夹中文件的数量来确定
         File folder = new File(ARTICLE_FOLDER);
@@ -69,6 +89,13 @@ public class ChangeArticle {
         Article newArticle = new Article(newId, title, content, author, 0,times); // 使用新的 ID
         saveAuthorArticle(newArticle,times);
     }
+
+    /**
+     * 保存文章到文件系统。
+     *
+     * @param article 要保存的文章对象
+     * @param times   文章的时间戳
+     */
 
     public static void saveAuthorArticle(Article article,Times times) {
         List<String> lines = new ArrayList<>();

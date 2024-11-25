@@ -7,9 +7,22 @@ import org.example.AllCanUse.load;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * UserRegister 类用于处理用户注册操作。
+ * 用户通过输入用户名、密码和邮箱完成注册，系统会对输入的内容进行验证。
+ * 注册成功后会将用户信息保存到文件中。
+ */
+
 public class UserRegister {
     private static final String BASE_FOLDER = "data/users_data/";
     private static final String USER_FILE = "users.txt";
+
+    /**
+     * 提供用户注册功能。
+     * 用户输入用户名、密码和邮箱，并进行相应的验证。若输入无效，则会提示重新输入。
+     * 注册成功后，用户信息会被存储在文件中。
+     */
+
     public static void register() {
         NewPage.newpage();
         System.out.print("\n ---------");
@@ -31,13 +44,13 @@ public class UserRegister {
             }
         }
 
-        System.out.println("请输入密码（包含 数字、大写、小写、特殊字符）：");
+        System.out.println("请输入密码（至少8位，包含 数字、大写、小写）：");
         String password = scanner.nextLine();
         if(password.equals("#")) {
             return;
         }
         while (!register_password(password)) {
-            System.out.println("请重新输入密码（包含 数字、大写、小写、特殊字符）：");
+            System.out.println("请重新输入密码（至少8位，包含 数字、大写、小写）：");
             password = scanner.nextLine();
             if(password.equals("#")) {
                 return;
@@ -68,6 +81,14 @@ public class UserRegister {
         }
     }
 
+    /**
+     * 检查用户名是否已存在。
+     * 如果用户名已存在，则提示用户名已存在，返回 false；否则返回 true。
+     *
+     * @param username 用户名
+     * @return 如果用户名不存在，返回 true；如果用户名已存在，返回 false
+     */
+
     public static boolean register_name(String username){
         List<User> users = load.loadUsers();
         for (User user : users) {
@@ -79,6 +100,14 @@ public class UserRegister {
         return true;
     }
 
+    /**
+     * 验证密码是否符合要求。
+     * 密码必须至少8位，且包含数字、大写字母和小写字母，不包含空格。
+     *
+     * @param password 密码
+     * @return 如果密码符合要求，返回 true；否则返回 false
+     */
+
     public static boolean register_password(String password) {
 
         if (password == null || password.length() < 8) {
@@ -89,14 +118,13 @@ public class UserRegister {
         boolean hasDigit = password.matches(".*[0-9].*");
         boolean hasUppercase = password.matches(".*[A-Z].*");
         boolean hasLowercase = password.matches(".*[a-z].*");
-        boolean hasSpecialChar = password.matches(".*[!@#$%^&*(),.?\":{}|<>].*"); // 常见特殊字符
 
         if (password.contains(" ")) {
             System.out.println("密码不能包含空格!");
             return false;
         }
 
-        if (hasDigit && hasUppercase && hasLowercase && hasSpecialChar) {
+        if (hasDigit && hasUppercase && hasLowercase) {
             return true;
         }
         else {
@@ -109,12 +137,17 @@ public class UserRegister {
             if (!hasLowercase) {
                 System.out.println("密码未包含小写字母!");
             }
-            if (!hasSpecialChar) {
-                System.out.println("密码未包含特殊字符!");
-            }
             return false;
         }
     }
+
+    /**
+     * 验证邮箱格式是否符合要求。
+     * 邮箱需要符合一定的长度要求，并且必须是一个有效的格式，且只支持指定的域名。
+     *
+     * @param email 邮箱
+     * @return 如果邮箱符合要求，返回 true；否则返回 false
+     */
 
     public static boolean register_email(String email){
 

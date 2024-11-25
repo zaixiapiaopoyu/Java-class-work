@@ -2,7 +2,6 @@ package org.example.Articlepage;
 
 import org.example.AllCanUse.FileHandler;
 import org.example.AllCanUse.NewPage;
-import org.example.AllCanUse.Times;
 import org.example.AllCanUse.load;
 import org.example.Commentpage.Comment;
 
@@ -12,11 +11,22 @@ import java.util.Scanner;
 
 import static org.example.Commentpage.ManageComment.*;
 
+/**
+ * ReadArticle 类用于显示文章内容，并允许用户进行点赞、评论及回复操作。
+ */
+
 public class ReadArticle {
 
     private static final String ARTICLE_FOLDER = "data/articles/";
     private static final String FILE_SUFFIX = "_article.txt";
 
+    /**
+     * 显示文章内容及相关操作。
+     *
+     * @param scanner    输入扫描器
+     * @param article    当前显示的文章对象
+     * @param currentUser 当前登录的用户
+     */
 
     public static void readArticle(Scanner scanner, Article article, String currentUser) {
         while (true) {
@@ -94,7 +104,7 @@ public class ReadArticle {
                         if (commentIndex > 0 && commentIndex <= len) {
                             System.out.println("请输入回复内容：");
                             String reply = scanner.nextLine();
-                            addreplyComment(newarticle.getId(), commentIndex, currentUser, reply,newarticle);
+                            addreplyComment(commentIndex, currentUser, reply,newarticle);
                             System.out.println("回复成功！");
                             try {
                                 Thread.sleep(1000);
@@ -144,6 +154,12 @@ public class ReadArticle {
             }
         }
     }
+
+    /**
+     * 保存文章内容到文件。
+     *
+     * @param article 需要保存的文章对象
+     */
 
     public static void saveArticle(Article article) {
         List<String> lines = new ArrayList<>();

@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 import static org.example.Articlepage.ManageArticle.managearticle;
 
+// 主界面程序入口，负责展示菜单和处理用户的选择操作
 
 public class Main {
     public static void main(String[] args) {
@@ -32,6 +33,7 @@ public class Main {
 
             String choice = scanner.nextLine().trim();
 
+            //登录
             if (choice.equals("1")) {
                 if(!isLoggedIn) {
                     currentUser = UserLogin.login();
@@ -48,9 +50,13 @@ public class Main {
                     isLoggedIn = true;
                 }
             }
+
+            //注册
             else if (choice.equals("2")) {
                 UserRegister.register();
             }
+
+            //退出登录
             else if (choice.equals("3")) {
                 currentUser = null;
                 isLoggedIn = false;
@@ -61,12 +67,18 @@ public class Main {
                     throw new RuntimeException(e);
                 }
             }
+
+            //文章管理
             else if (choice.equals("4")) {
                 ManageArticle.managearticle(isLoggedIn,scanner,currentUser);
             }
+
+            //文章浏览
             else if (choice.equals("5")) {
                 SelectArticles.selectArticles(scanner,currentUser);
             }
+
+            //退出应用
             else if (choice.equals("6")) {
                 NewPage.newpage();
                 System.out.print("\n -------");

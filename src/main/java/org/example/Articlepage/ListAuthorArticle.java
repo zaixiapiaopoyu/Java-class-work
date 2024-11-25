@@ -5,7 +5,19 @@ import org.example.AllCanUse.load;
 
 import java.util.List;
 
+/**
+ * ListAuthorArticle 类用于列出当前用户发布的所有文章标题。
+ */
+
 public class ListAuthorArticle {
+
+    /**
+     * 列出指定用户的所有文章标题。
+     *
+     * @param currentUser 当前用户的用户名
+     * @return 当前用户发布的文章总数
+     */
+
     public static int listauthorarticle(String currentUser) {
         NewPage.newpage();
         List<Article> articles = load.loadArticles();

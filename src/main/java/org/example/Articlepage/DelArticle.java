@@ -2,10 +2,20 @@ package org.example.Articlepage;
 
 import java.io.File;
 
+/**
+ * DelArticle 类用于删除指定的文章文件以及其对应的评论文件。
+ */
+
 public class DelArticle {
 
     private static final String ARTICLE_FOLDER = "data/articles/";
     private static final String FILE_SUFFIX = "_article.txt";
+
+    /**
+     * 删除文章的方法，包括文章文件和对应的评论文件。
+     *
+     * @param article 要删除的文章对象
+     */
 
     public static void delArticle(Article article) {
         String title = article.getTimes().TimeMilliseconds()+ "_" + article.getTitle();
