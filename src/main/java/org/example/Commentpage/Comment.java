@@ -26,6 +26,10 @@ public class Comment {
         this.times = times;
     }
 
+    public Comment() {
+
+    }
+
     public int getId() {
         return id;
     }
@@ -55,7 +59,7 @@ public class Comment {
      * @return 解析得到的 Comment 对象
      */
 
-    public static Comment fromString(String line) {
+    public Comment fromString(String line) {
         try {
             String[] parts = line.split("\n", 3);
             int id = Integer.parseInt(parts[0].trim());

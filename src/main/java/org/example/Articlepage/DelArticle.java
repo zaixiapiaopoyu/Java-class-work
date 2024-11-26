@@ -8,8 +8,8 @@ import java.io.File;
 
 public class DelArticle {
 
-    private static final String ARTICLE_FOLDER = "data/articles/";
-    private static final String FILE_SUFFIX = "_article.txt";
+    private final String ARTICLE_FOLDER = "data/articles/";
+    private final String FILE_SUFFIX = "_article.txt";
 
     /**
      * 删除文章的方法，包括文章文件和对应的评论文件。
@@ -17,7 +17,7 @@ public class DelArticle {
      * @param article 要删除的文章对象
      */
 
-    public static void delArticle(Article article) {
+    public void delArticle(Article article) {
         String title = article.getTimes().TimeMilliseconds()+ "_" + article.getTitle();
         String filePath = ARTICLE_FOLDER + title + FILE_SUFFIX;
         String filePath_comments = "data/comments/" + title + "_comments.txt ";

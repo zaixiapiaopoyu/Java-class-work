@@ -14,8 +14,8 @@ import java.util.Scanner;
  */
 
 public class UserRegister {
-    private static final String BASE_FOLDER = "data/users_data/";
-    private static final String USER_FILE = "users.txt";
+    private final String BASE_FOLDER = "data/users_data/";
+    private final String USER_FILE = "users.txt";
 
     /**
      * 提供用户注册功能。
@@ -23,8 +23,9 @@ public class UserRegister {
      * 注册成功后，用户信息会被存储在文件中。
      */
 
-    public static void register() {
-        NewPage.newpage();
+    public void register() {
+        NewPage newPage = new NewPage();
+        newPage.newpage();
         System.out.print("\n ---------");
         System.out.println("\n| 用户注册 |");
         System.out.println(" ---------\n");
@@ -72,7 +73,8 @@ public class UserRegister {
         }
 
         User newUser = new User(username, password, email);
-        FileHandler.appendFile(BASE_FOLDER, "", USER_FILE, newUser.toFileString());
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.appendFile(BASE_FOLDER, "", USER_FILE, newUser.toFileString());
         System.out.println("注册成功！");
         try {
             Thread.sleep(1000);
@@ -89,7 +91,8 @@ public class UserRegister {
      * @return 如果用户名不存在，返回 true；如果用户名已存在，返回 false
      */
 
-    public static boolean register_name(String username){
+    public boolean register_name(String username){
+        load load = new load();
         List<User> users = load.loadUsers();
         for (User user : users) {
             if (user.getUsername().equals(username)) {
@@ -108,7 +111,7 @@ public class UserRegister {
      * @return 如果密码符合要求，返回 true；否则返回 false
      */
 
-    public static boolean register_password(String password) {
+    public boolean register_password(String password) {
 
         if (password == null || password.length() < 8) {
             System.out.println("密码不能为空，且长度不能少于8个字符!");
@@ -149,7 +152,7 @@ public class UserRegister {
      * @return 如果邮箱符合要求，返回 true；否则返回 false
      */
 
-    public static boolean register_email(String email){
+    public boolean register_email(String email){
 
         String[] allowedDomains = {"qq.com", "gmail.com", "outlook.com", "163.com", "126.com", "yahoo.com", "sina.com", "hotmail.com"};
         boolean len = false;

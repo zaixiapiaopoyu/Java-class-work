@@ -14,7 +14,7 @@ public class TimesTamp {
      * @return 包含当前时间（年、月、日、时、分、秒）的 Times 对象
      */
 
-    public static Times timestamp() {
+    public Times timestamp() {
         // 获取当前时间（包括年、月、日、时、分、秒）
         Calendar calendar = Calendar.getInstance();
 

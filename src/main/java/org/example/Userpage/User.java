@@ -24,6 +24,11 @@ public class User {
         this.email = email;
     }
 
+    // 默认构造方法，允许创建一个空的 User 对象
+    public User() {
+
+    }
+
     public String getUsername() {
         return username;
     }
@@ -52,7 +57,7 @@ public class User {
      * @return 解析得到的 User 对象
      */
 
-    public static User fromString(String line) {
+    public User fromString(String line) {
         try {
             String[] parts = line.split("\n", 3);
             String username = parts[0].trim();

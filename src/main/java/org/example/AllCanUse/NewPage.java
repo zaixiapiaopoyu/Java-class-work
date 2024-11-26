@@ -7,7 +7,7 @@ public class NewPage {
      * 使用 "\n" 打印 80 行空行，清空终端的当前输出。
      */
 
-    public static void newpage(){
+    public void newpage(){
         System.out.println("\n".repeat(80));
     }
 }

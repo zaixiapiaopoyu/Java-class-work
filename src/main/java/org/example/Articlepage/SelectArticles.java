@@ -19,10 +19,12 @@ public class SelectArticles {
      * @param currentUser 当前登录的用户
      */
 
-    public static void  selectArticles(Scanner scanner, String currentUser) {
+    public void  selectArticles(Scanner scanner, String currentUser) {
+        load load = new load();
         List<Article> articles = load.loadArticles();
         if (articles.isEmpty()) {
-            NewPage.newpage();
+            NewPage newPage = new NewPage();
+            newPage.newpage();
             System.out.print("\n ---------");
             System.out.println("\n| 选择文章 |");
             System.out.println(" ---------\n");
@@ -36,7 +38,8 @@ public class SelectArticles {
         }
 
         while (true) {
-            NewPage.newpage();
+            NewPage newPage = new NewPage();
+            newPage.newpage();
             System.out.print("\n ---------");
             System.out.println("\n| 选择文章 |");
             System.out.println(" ---------\n");
@@ -56,7 +59,8 @@ public class SelectArticles {
             else if (choice.matches("\\d+")) { // 使用正则表达式检查是否为正整数
                 int choiceInt = Integer.parseInt(choice); // 转换为整数
                 if (choiceInt > 0 && choiceInt <= articles.size()) {
-                    ReadArticle.readArticle(scanner, articles.get(choiceInt - 1), currentUser);
+                    ReadArticle readArticle = new ReadArticle();
+                    readArticle.readArticle(scanner, articles.get(choiceInt - 1), currentUser);
                 }
                 else {
                     System.out.println("无效选项！");

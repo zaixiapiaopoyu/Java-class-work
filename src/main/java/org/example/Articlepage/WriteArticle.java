@@ -13,8 +13,8 @@ import java.util.Scanner;
 
 public class WriteArticle {
 
-    private static final String ARTICLE_FOLDER = "data/articles/";
-    private static final String FILE_SUFFIX = "_article.txt";
+    private final String ARTICLE_FOLDER = "data/articles/";
+    private final String FILE_SUFFIX = "_article.txt";
 
     /**
      * 发布文章方法，用户输入标题和内容来创建一篇新的文章。
@@ -22,8 +22,9 @@ public class WriteArticle {
      * @param currentUser 当前登录用户
      */
 
-    public static void writeArticle(String currentUser ) {
-        NewPage.newpage();
+    public void writeArticle(String currentUser ) {
+        NewPage newPage = new NewPage();
+        newPage.newpage();
         System.out.print("\n\n ---------");
         System.out.println("\n| 发布文章 |");
         System.out.println(" ---------\n");
@@ -49,7 +50,8 @@ public class WriteArticle {
         if (content.equals("#")) {
             return;
         }
-        Times Times = TimesTamp.timestamp();
+        TimesTamp timesTamp = new TimesTamp();
+        Times Times = timesTamp.timestamp();
         addArticle(title, content, currentUser,Times);
         System.out.println("已成功发布文章！");
         try {
@@ -68,7 +70,7 @@ public class WriteArticle {
      * @param times   文章发布时间
      */
 
-    private static void addArticle(String title, String content, String author,Times times) {
+    private void addArticle(String title, String content, String author,Times times) {
         // 生成新的 ID，可以通过文件夹中文件的数量来确定
         File folder = new File(ARTICLE_FOLDER);
         int newId = folder.listFiles() != null ? folder.listFiles().length + 1 : 1;
@@ -84,14 +86,15 @@ public class WriteArticle {
      * @param times    文章发布时间
      */
 
-    public static void saveAuthorArticle(Article article,Times times) {
+    public void saveAuthorArticle(Article article,Times times) {
         List<String> lines = new ArrayList<>();
         lines.add("题目：" + article.getTitle());
         lines.add("作者：" + article.getAuthor());
         lines.add("时间：" + times.print());
         lines.add("内容：" + article.getContent());
         lines.add("点赞量：" + article.getLikes());
-        FileHandler.writeFile(ARTICLE_FOLDER, article.getTitle(), FILE_SUFFIX, lines,article.getTimes().TimeMilliseconds());
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.writeFile(ARTICLE_FOLDER, article.getTitle(), FILE_SUFFIX, lines,article.getTimes().TimeMilliseconds());
     }
 
 }

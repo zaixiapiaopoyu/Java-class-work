@@ -14,21 +14,20 @@ import java.util.List;
 
 public class ManageComment {
 
-    private static final String BASE_FOLDER = "data/comments/";
-    private static final String COMMENT_FILE_SUFFIX = "_comments.txt";
+    private final String BASE_FOLDER = "data/comments/";
+    private final String COMMENT_FILE_SUFFIX = "_comments.txt";
 
     /**
      * 添加评论到指定文章
      *
-     * @param articleId 文章ID
      * @param content 评论内容
      * @param article 文章对象
      * @param username 评论用户名（如果没有则为匿名用户）
      */
 
 
-    public static void addComment(int articleId, String content, Article article, String username) {
-        List<Comment> comments = loadComments(article.getTimes().TimeMilliseconds() + "_" + article.getTitle());
+    public void AddComment( String content, Article article, String username) {
+        List<Comment> comments = LoadComments(article.getTimes().TimeMilliseconds() + "_" + article.getTitle());
         int len = 0;
         for(Comment comment : comments) {
             if(comment.getId() != 0){
@@ -36,7 +35,8 @@ public class ManageComment {
             }
         }
         int newId = len + 1;
-        Times times = TimesTamp.timestamp();
+        TimesTamp timesTamp = new TimesTamp();
+        Times times = timesTamp.timestamp();
         Comment newComment;
         if(username != null) {
             newComment = new Comment(newId, username + " : " + content, times);
@@ -44,7 +44,8 @@ public class ManageComment {
         else{
             newComment = new Comment(newId, "匿名用户 : " + content, times);
         }
-        FileHandler.appendFile(BASE_FOLDER, article.getTimes().TimeMilliseconds() + "_" + article.getTitle(), COMMENT_FILE_SUFFIX, newComment.toFileString());
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.appendFile(BASE_FOLDER, article.getTimes().TimeMilliseconds() + "_" + article.getTitle(), COMMENT_FILE_SUFFIX, newComment.toFileString());
     }
 
     /**
@@ -55,8 +56,9 @@ public class ManageComment {
      * @param content 回复内容
      * @param article 文章对象
      */
-    public static void addreplyComment( int parentId, String username, String content, Article article) {
-        List<String> lines = FileHandler.readFile(BASE_FOLDER, article.getTimes().TimeMilliseconds() + "_" + article.getTitle(), COMMENT_FILE_SUFFIX);
+    public void AddreplyComment( int parentId, String username, String content, Article article) {
+        FileHandler fileHandler = new FileHandler();
+        List<String> lines = fileHandler.readFile(BASE_FOLDER, article.getTimes().TimeMilliseconds() + "_" + article.getTitle(), COMMENT_FILE_SUFFIX);
         List<String> updatedLines = new ArrayList<>();
         boolean replyAdded = false;
 
@@ -68,11 +70,13 @@ public class ManageComment {
             if(Linecount == 3){
                 Linecount = 0;
                 updatedLines.add(threeline[0] + "\n" + threeline[1] + "\n" + threeline[2]);
-                Comment comment = Comment.fromString(threeline[0] + "\n" + threeline[1] + "\n" + threeline[2]);
+                Comment comment = new Comment();
+                comment = comment.fromString(threeline[0] + "\n" + threeline[1] + "\n" + threeline[2]);
                 if (!replyAdded && comment.getId() == parentId) {
                     int newId = 0;
                     String replyContent = username + " 回复: " + content;
-                    Times times = TimesTamp.timestamp();
+                    TimesTamp timesTamp = new TimesTamp();
+                    Times times = timesTamp.timestamp();
                     Comment reply = new Comment(newId, replyContent, times);
                     updatedLines.add(reply.toFileString());
                     replyAdded = true;
@@ -84,7 +88,7 @@ public class ManageComment {
             System.out.println("未找到父评论，回复失败！");
         }
         else {
-            FileHandler.writecommentFile(BASE_FOLDER, article.getTimes().TimeMilliseconds() + "_" + article.getTitle(), COMMENT_FILE_SUFFIX, updatedLines);
+            fileHandler.writecommentFile(BASE_FOLDER, article.getTimes().TimeMilliseconds() + "_" + article.getTitle(), COMMENT_FILE_SUFFIX, updatedLines);
         }
     }
 
@@ -95,9 +99,10 @@ public class ManageComment {
      * @return 评论列表
      */
 
-    public static List<Comment> loadComments(String title) {
+    public List<Comment> LoadComments(String title) {
         List<Comment> comments = new ArrayList<>();
-        List<String> lines = FileHandler.readFile(BASE_FOLDER, title, COMMENT_FILE_SUFFIX);
+        FileHandler fileHandler = new FileHandler();
+        List<String> lines = fileHandler.readFile(BASE_FOLDER, title, COMMENT_FILE_SUFFIX);
         int Linecount = 0;
         String[] threeline = new String[3];
         for (String line : lines) {
@@ -105,7 +110,8 @@ public class ManageComment {
             Linecount++;
             if(Linecount == 3){
                 Linecount = 0;
-                Comment comment = Comment.fromString(threeline[0] + "\n" + threeline[1] + "\n" + threeline[2]);
+                Comment comment = new Comment();
+                comment = comment.fromString(threeline[0] + "\n" + threeline[1] + "\n" + threeline[2]);
                 if (comment != null) {
                     comments.add(comment);
                 }

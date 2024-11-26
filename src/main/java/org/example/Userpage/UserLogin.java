@@ -25,10 +25,11 @@ public class UserLogin {
      * @return 登录成功返回用户名，失败则返回 null
      */
 
-    public static String login() {
+    public String login() {
         boolean isLoggedIn = false;
         while (!isLoggedIn) {
-            NewPage.newpage();
+            NewPage newPage = new NewPage();
+            newPage.newpage();
             System.out.print("\n ---------");
             System.out.println("\n| 用户登录 |");
             System.out.println(" ---------\n");
@@ -44,7 +45,7 @@ public class UserLogin {
             if(password.equals("#")) {
                 break;
             }
-            if (login(username, password)) {
+            if (islogin(username, password)) {
                 isLoggedIn = true;
                 return username;
             }
@@ -61,7 +62,7 @@ public class UserLogin {
      * @return 登录成功返回 true，失败则返回 false
      */
 
-    public static boolean login(String username, String password) {
+    public boolean islogin(String username, String password) {
         List<User> users = loadUsers();
         for (User user : users) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
@@ -90,11 +91,12 @@ public class UserLogin {
      * @return 所有用户的列表
      */
 
-    public static List<User> loadUsers() {
+    public List<User> loadUsers() {
         List<User> users = new ArrayList<>();
         int lineCount = 0;
         String[] threeLines = new String[3];
-        List<String> lines = FileHandler.readFile(BASE_FOLDER, "", USER_FILE);
+        FileHandler fileHandler = new FileHandler();
+        List<String> lines = fileHandler.readFile(BASE_FOLDER, "", USER_FILE);
         for (String line : lines) {
             if (line.trim().isEmpty()) {
                 continue;
@@ -105,7 +107,8 @@ public class UserLogin {
                 lineCount = 0;
                 String combinedLines = threeLines[0] + "\n" + threeLines[1] + "\n" + threeLines[2];
 
-                User user = User.fromString(combinedLines);
+                User user = new User();
+                user = user.fromString(combinedLines);
                 if (user != null) {
                     users.add(user);
                 }

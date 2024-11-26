@@ -18,8 +18,10 @@ public class ListAuthorArticle {
      * @return 当前用户发布的文章总数
      */
 
-    public static int listauthorarticle(String currentUser) {
-        NewPage.newpage();
+    public int listauthorarticle(String currentUser) {
+        NewPage newPage = new NewPage();
+        newPage.newpage();
+        load load = new load();
         List<Article> articles = load.loadArticles();
         int i = 0;
         if (articles.isEmpty()) {

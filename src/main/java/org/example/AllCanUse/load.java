@@ -26,11 +26,12 @@ public class load {
      * @return 用户列表
      */
 
-    public static List<User> loadUsers() {
+    public List<User> loadUsers() {
         List<User> users = new ArrayList<>();
         int lineCount = 0;
         String[] threeLines = new String[3];
-        List<String> lines = FileHandler.readFile(BASE_FOLDER, "", USER_FILE);
+        FileHandler fileHandler = new FileHandler();
+        List<String> lines =fileHandler.readFile(BASE_FOLDER, "", USER_FILE);
         for (String line : lines) {
             threeLines[lineCount] = line;
             lineCount++;
@@ -38,7 +39,8 @@ public class load {
                 lineCount = 0;
                 String combinedLines = threeLines[0] + "\n" + threeLines[1] + "\n" + threeLines[2];
 
-                User user = User.fromString(combinedLines);
+                User user = new User();
+                user = user.fromString(combinedLines);
                 if (user != null) {
                     users.add(user);
                 }
@@ -55,7 +57,7 @@ public class load {
      * @return 文章列表
      */
 
-    public static List<Article> loadArticles() {
+    public List<Article> loadArticles() {
         File folder = new File(ARTICLE_FOLDER);
         List<Article> articles = new ArrayList<>();
 
@@ -89,8 +91,9 @@ public class load {
      * @return 加载的文章对象
      */
 
-    public static Article loadSingleArticle(String title, int id) {
-        List<String> lines = FileHandler.readFile(ARTICLE_FOLDER, title, FILE_SUFFIX);
+    public Article loadSingleArticle(String title, int id) {
+        FileHandler fileHandler = new FileHandler();
+        List<String> lines = fileHandler.readFile(ARTICLE_FOLDER, title, FILE_SUFFIX);
 
         String articleTitle = lines.get(0).replace("题目：", "").trim();
         String author = lines.get(1).replace("作者：", "").trim();
