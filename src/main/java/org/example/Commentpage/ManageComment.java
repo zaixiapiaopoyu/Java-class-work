@@ -65,6 +65,9 @@ public class ManageComment {
         int Linecount = 0;
         String[] threeline = new String[3];
         for (String line : lines) {
+            if(line.isEmpty()){
+                continue;
+            }
             threeline[Linecount] = line;
             Linecount++;
             if(Linecount == 3){
@@ -106,6 +109,9 @@ public class ManageComment {
         int Linecount = 0;
         String[] threeline = new String[3];
         for (String line : lines) {
+            if(line.isEmpty()){
+                continue;
+            }
             threeline[Linecount] = line;
             Linecount++;
             if(Linecount == 3){

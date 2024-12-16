@@ -159,22 +159,20 @@ public class ReadArticle {
     }
 
 
-
+    /**
+     * 回复评论操作。
+     *
+     * @param scanner     输入扫描器
+     * @param command     用户输入的命令
+     * @param article     当前显示的文章对象
+     * @param currentUser 当前登录的用户
+     */
     private void handleReply(Scanner scanner, String command, Article article, String currentUser) {
         if (currentUser == null) {
             System.out.println("请先登录！");
             pause(2000);
             return;
         }
-
-        /**
-         * 回复评论操作。
-         *
-         * @param scanner     输入扫描器
-         * @param command     用户输入的命令
-         * @param article     当前显示的文章对象
-         * @param currentUser 当前登录的用户
-         */
 
         String[] parts = command.split(" ");
         if (parts.length != 2) {
@@ -195,14 +193,14 @@ public class ReadArticle {
         ManageComment manageComment = new ManageComment();
         List<Comment> comments = manageComment.LoadComments(article.getTimes().TimeMilliseconds() + "_" + article.getTitle());
 
-        if (commentIndex > 0 && commentIndex <= comments.size() && comments.get(commentIndex - 1).getId() != 0) {
+        if (commentIndex > 0 && commentIndex <= comments.size()) {
             System.out.println("请输入回复内容：");
             String reply = scanner.nextLine();
             manageComment.AddreplyComment(commentIndex, currentUser, reply, article);
             System.out.println("回复成功！");
             pause(1000);
         } else {
-            System.out.println("无效评论序号！");
+            System.out.println("无效评论序号！!!");
             pause(2000);
         }
     }

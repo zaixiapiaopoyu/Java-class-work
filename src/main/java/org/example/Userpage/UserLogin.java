@@ -2,6 +2,7 @@ package org.example.Userpage;
 
 import org.example.AllCanUse.FileHandler;
 import org.example.AllCanUse.NewPage;
+import org.example.AllCanUse.load;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +64,8 @@ public class UserLogin {
      */
 
     public boolean islogin(String username, String password) {
-        List<User> users = loadUsers();
+        load load = new load();
+        List<User> users = load.loadUsers();
         for (User user : users) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
                 System.out.println("登录成功！");
@@ -82,38 +84,5 @@ public class UserLogin {
             throw new RuntimeException(e);
         }
         return false;
-    }
-
-    /**
-     * 从文件中加载所有的用户数据。
-     * 文件中每个用户占三行（用户名、密码、邮箱），将其解析为 User 对象并添加到用户列表中。
-     *
-     * @return 所有用户的列表
-     */
-
-    public List<User> loadUsers() {
-        List<User> users = new ArrayList<>();
-        int lineCount = 0;
-        String[] threeLines = new String[3];
-        FileHandler fileHandler = new FileHandler();
-        List<String> lines = fileHandler.readFile(BASE_FOLDER, "", USER_FILE);
-        for (String line : lines) {
-            if (line.trim().isEmpty()) {
-                continue;
-            }
-            threeLines[lineCount] = line;
-            lineCount++;
-            if (lineCount == 3) {
-                lineCount = 0;
-                String combinedLines = threeLines[0] + "\n" + threeLines[1] + "\n" + threeLines[2];
-
-                User user = new User();
-                user = user.fromString(combinedLines);
-                if (user != null) {
-                    users.add(user);
-                }
-            }
-        }
-        return users;
     }
 }

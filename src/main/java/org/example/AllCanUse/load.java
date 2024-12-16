@@ -33,6 +33,9 @@ public class load {
         FileHandler fileHandler = new FileHandler();
         List<String> lines =fileHandler.readFile(BASE_FOLDER, "", USER_FILE);
         for (String line : lines) {
+            if(line.isEmpty()){
+                continue;
+            }
             threeLines[lineCount] = line;
             lineCount++;
             if (lineCount == 3) {

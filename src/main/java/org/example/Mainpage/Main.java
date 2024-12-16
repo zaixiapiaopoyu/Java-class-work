@@ -2,6 +2,7 @@
 //    想好演示脚本  2分内
 package org.example.Mainpage;
 
+import org.example.AllCanUse.Initialize;
 import org.example.AllCanUse.NewPage;
 import org.example.Articlepage.ManageArticle;
 import org.example.Articlepage.SelectArticles;
@@ -27,6 +28,8 @@ public class Main {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+        Initialize initialize = new Initialize();
+        initialize.initialize();
         while (true) {
             newPage.newpage();
             System.out.print("\n -------");
